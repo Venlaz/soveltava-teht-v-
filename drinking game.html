@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drinking Game</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            margin: 0;
+            text-align: center;
+            color: #fff;
+        }
+        h1 {
+            font-size: 3rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1000px;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            margin: 10px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 10px;
+            background: #ff7eb3;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .button:hover {
+            background: #ff4e84;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <h1> Drinking Game </h1>
+    <div class="container">
+        <div class="card">
+            <h2>Would You Rather?</h2>
+            <p id="wyrQuestion">Click the button to get a question!</p>
+            <button class="button" onclick="fetchQuestion('wyr', 'wyrQuestion')">Get WYR Question</button>
+        </div>
+        <div class="card">
+            <h2>Never Have I Ever?</h2>
+            <p id="nhieQuestion">Click the button to get a question!</p>
+            <button class="button" onclick="fetchQuestion('nhie', 'nhieQuestion')">Get NHIE Question</button>
+        </div>
+        <div class="card">
+            <h2>Truth</h2>
+            <p id="truthQuestion">Click the button to get a question!</p>
+            <button class="button" onclick="fetchQuestionV1('truth', 'truthQuestion')">Get Truth Question</button>
+        </div>
+        <div class="card">
+            <h2>Dare</h2>
+            <p id="dareQuestion">Click the button to get a question!</p>
+            <button class="button" onclick="fetchQuestion('dare', 'dareQuestion')">Get Dare Question</button>
+        </div>
+    </div>
+    
+    <script>
+        async function fetchQuestion(endpoint, elementId) {
+            const response = await fetch(`https://api.truthordarebot.xyz/api/${endpoint}`);
+            const data = await response.json();
+            document.getElementById(elementId).innerText = data.question;
+        }
+        
+        async function fetchQuestionV1(endpoint, elementId) {
+            const response = await fetch(`https://api.truthordarebot.xyz/v1/${endpoint}`);
+            const data = await response.json();
+            document.getElementById(elementId).innerText = data.question;
+        }
+    </script>
+</body>
+</html>
